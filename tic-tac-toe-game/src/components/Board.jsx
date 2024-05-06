@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BoardSquare } from "./BoardSquare";
 import { BoardContext } from "../contexts/BoardContext";
 import { PlayerContext } from "../contexts/PlayerContext";
+import { EndGamePopUp } from "./EndGamePopUp";
 
 export function Board(props) {
     const [board, setBoard] = useState(BoardContext._currentValue);
@@ -55,6 +56,7 @@ export function Board(props) {
 
     function handleGameReset() {
         setIsTheGameFinished(false);
+        setCurrentPlayer("X")
         setEndGameMessage("");
         setRound(1);
         setBoard([
@@ -65,12 +67,13 @@ export function Board(props) {
     }
 
     return (
-        <div>
-            <div className="flex flex-col justify-center items-center gap-5">
-                <div>Player Turn: {currentPlayer}</div>
-                <div>{endGameMessage}</div>
+        <div className="flex flex-col justify-center items-center gap-5">
+            <div className="flex flex-col justify-evenly items-center w-full text-2xl">
+                <div className="border-b-2 border-b-gray-100 p-2">Player Turn:{" " + currentPlayer}</div>
+                <button className="my-2 h-8 box-border hover:border-b-2 hover:border-b-gray-100"
+                    onClick={handleGameReset}>Reset game!</button>
             </div>
-            <div className="bg-slate-800 w-[240px]">
+            <div className="w-[257px] bg-[url('../src/assets/tic-tac-toe-grid.png')] bg-auto">
                 <div className="grid grid-cols-3 grid-rows-3 gap-3">
                     <PlayerContext.Provider value={currentPlayer}>
                         <BoardContext.Provider value={board}>
@@ -87,7 +90,9 @@ export function Board(props) {
                     </PlayerContext.Provider>
                 </div>
             </div>
-            <button onClick={handleGameReset}>Reset game!</button>
+            {endGameMessage !== "" ? (
+                <EndGamePopUp message={endGameMessage} reset={handleGameReset} close={setEndGameMessage} />
+            ) : <div className="hidden" />}
         </div>
     )
 }

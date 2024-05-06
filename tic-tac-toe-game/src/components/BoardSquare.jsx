@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useState } from "react";
+import { toast } from "sonner";
 import { BoardContext } from "../contexts/BoardContext";
 import { PlayerContext } from "../contexts/PlayerContext";
 
@@ -16,7 +16,7 @@ export function BoardSquare (props) {
 
     function handleSquareClick() {
         if (getBoardValueForSquare() != "") {
-            alert("This square is unavaliable!");
+            toast.warning("This square is unavaliable!");
             return;
         }
         const line = parseInt(props.id.substring(0, 1));
@@ -28,7 +28,7 @@ export function BoardSquare (props) {
 
     return (
         <button id={props.id} onClick={handleSquareClick} disabled={props.isTheGameFinished}
-        className="bg-yellow-300 h-[80px] flex flex-col justify-center items-center hover:bg-yellow-700">
+        className="h-[80px] flex flex-col justify-center items-center text-4xl">
             {getBoardValueForSquare()}
         </button>
     )

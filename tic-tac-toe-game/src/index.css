@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: Sheila-Crayon;
+    src: url("../src/assets/fonts/SheilaCrayon-1vWg.ttf");
+}
+
+html, body, #root, #screen {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
